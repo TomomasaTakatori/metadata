@@ -43,3 +43,16 @@ swagger-py-client:
     rm -rf sdk/python/kubeflow/metadata/swagger_client && \
     cp -r /tmp/swagger/kubeflow/metadata/openapi_client sdk/python/kubeflow/metadata && \
     rm -rf /tmp/swagger
+swagger-java-client:
+	mkdir -p /tmp/swagger
+	wget http://central.maven.org/maven2/org/openapitools/openapi-generator-cli/4.0.1/openapi-generator-cli-4.0.1.jar -O /tmp/swagger/swagger-codegen-cli.jar && \
+    java -jar /tmp/swagger/swagger-codegen-cli.jar generate \
+    	-i api/service.swagger.json \
+    	-g java \
+		--package-name kubeflow.metadata.openapi_client \
+    	-o /tmp/swagger/java && \
+    rm -rf sdk/java && \
+    cp -r /tmp/swagger/java/src sdk/java/ && \
+    cp -r /tmp/swagger/java/pom.xml sdk/java/ && \
+    cp -r /tmp/swagger/java/README.md sdk/java/ && \
+    rm -rf /tmp/swagger
